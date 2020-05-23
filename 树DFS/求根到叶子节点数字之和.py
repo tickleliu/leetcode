@@ -53,6 +53,7 @@ if __name__ == "__main__":
         tree_node.right = right_node
         use_nodes.append(left_node)
         use_nodes.append(right_node)
+    result.append(root.data)
     sum_tree_num(root)
     print(sum)
     print(137 + 138 + 14 + 25 + 26)
