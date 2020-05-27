@@ -48,12 +48,27 @@ def letter_case_permutation(s="a1b2"):
     return result
 
 
+def letter_case_permutation_loop(s="a1b2"):
+    result = [""]
+    for c in s:
+        temp_result = []
+        for sub_s in result:
+            if c.isalpha():
+                temp_result.append(sub_s + c.lower())
+                temp_result.append(sub_s + c.upper())
+            else:
+                temp_result.append(sub_s + c)
+        result = temp_result
+
+    return result
+
+
 if __name__ == "__main__":
-    result = letter_case_permutation()
+    result = letter_case_permutation_loop()
     print(result)
 
-    result = letter_case_permutation(s="12345")
+    result = letter_case_permutation_loop(s="12345")
     print(result)
 
-    result = letter_case_permutation(s="12z45")
+    result = letter_case_permutation_loop(s="12z45")
     print(result)
