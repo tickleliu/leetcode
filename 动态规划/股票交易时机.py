@@ -73,6 +73,70 @@ def stock_trade2(prices=[3, 3, 5, 0, 0, 3, 1, 4]):
     return max_benefit
 
 
+def stock_trade3(prices=[3, 3, 5, 0, 0, 3, 1, 4]):
+    """
+    无限次交易
+    题目描述：
+      股票交易的原则是先买然后再卖，在买入之前必须至少休息一天，求最后能够获得的最大收益。
+    """
+    sold = [0] * len(prices)  # 当天结束后，手里没有股票的情况下，最大收益
+    hold = [0] * len(prices)  # 当天结束后，手里有股票的情况下, 最大收益
+    sold[0] = 0
+    hold[0] = -prices[0]
+    for i in range(1, len(prices)):
+        price = prices[i]
+        sold[i] = max(sold[i - 1], hold[i - 1] + price)
+        hold[i] = max(hold[i - 1], sold[i - 1] - price)
+
+    return max(hold[-1], sold[-1])
+
+
+def stock_trade4(prices=[1, 3, 2, 8, 4, 9], fee=2):
+    """
+    无限次交易
+    题目描述：
+      股票交易的原则是先买然后再卖，在买入之前必须至少休息一天，求最后能够获得的最大收益。
+    """
+    sold = [0] * len(prices)  # 当天结束后，手里没有股票的情况下，最大收益
+    hold = [0] * len(prices)  # 当天结束后，手里有股票的情况下, 最大收益
+    sold[0] = 0
+    hold[0] = -prices[0]
+    for i in range(1, len(prices)):
+        price = prices[i]
+        sold[i] = max(sold[i - 1], hold[i - 1] + price - fee)
+        hold[i] = max(hold[i - 1], sold[i - 1] - price)
+
+    return max(hold[-1], sold[-1])
+
+
+def stock_trade5(prices=[1, 3, 2, 8, 4, 9], k=2):
+    """
+    题目描述：
+        一共只能进行k次股票交易，求能够取得的最大利润。
+    """
+    dp = []
+    for i in range(len(prices) + 1):
+        dp_i = []
+        for j in range(k + 1):
+            dp_j = []
+            for s in range(2):
+                dp_j.append(0)
+            dp_i.append(dp_j)
+        dp.append(dp_i)
+    for j in range(k + 1):
+        dp[0][j][1] = -9999
+
+    for i in range(len(prices) + 1):
+        dp[i][0][1] = -9999
+
+    for i in range(1, len(prices) + 1):
+        for j in range(1, k + 1):
+            dp[i][j][0] = max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i - 1])
+            dp[i][j][1] = max(dp[i - 1][j - 1][0] - prices[i - 1], dp[i - 1][j][1])
+
+    print()
+
+
 if __name__ == "__main__":
     r = stock_trade()
     print(r)
@@ -84,3 +148,7 @@ if __name__ == "__main__":
 
     r = stock_trade2([1, 2, 3, 4, 5])
     print(r)
+
+    r = stock_trade3()
+    r = stock_trade4()
+    r = stock_trade5()

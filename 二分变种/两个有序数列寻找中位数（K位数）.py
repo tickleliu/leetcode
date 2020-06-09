@@ -110,7 +110,7 @@ def topk(num1=[1, 3, 5, 7], num2=[4, 6, 8, 10], k=1):
 
 
 if __name__ == "__main__":
-    # result = median()
+    result = median(num1=[1, 2, 3, 4], num2=[5, 6, 7, 8, 9])
     # print(result)
-    result = topk()
-    print(result)
+    # result = topk()
+    # print(result)

@@ -11,22 +11,22 @@
 @time: 2020/06/03 17:07
 """
 
-from queue import PriorityQueue
 
 
+from heapq import heappush, heappop
 class Solution(object):
     def nth_ugly_number(self, n):
         nums = [2, 3, 5]
         result = []
-        heap = PriorityQueue()
-        heap.put([1, 0])
+        heap = []
+        heappush(heap, [1, 0])
 
         while len(result) < n:
-            temp, idx = heap.get()
+            temp, idx = heappop(heap)
             result.append(temp)
             for i in range(idx, 3):
-                heap.put([nums[i] * temp, i])
-        return result
+                heappush(heap, [nums[i] * temp, i])
+        return result[-1]
 
 
 if __name__ == "__main__":
