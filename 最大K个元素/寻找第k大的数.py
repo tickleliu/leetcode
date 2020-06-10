@@ -51,6 +51,28 @@ def partition(nums, s, e):
     return r
 
 
+class Solution:
+    """
+    @param: A: An integer array
+    @param: B: An integer array
+    @return: a double whose format is *.5 or *.0
+    """
+
+    def findMedianSortedArrays(self, A, B):
+        # write your code here
+
+        A.extend(B)
+        A = sorted(A)
+        median = len(A)
+        if median % 2 == 0:
+            median_indexs = median // 2 - 1, median // 2
+        else:
+            median_indexs = median // 2, median // 2
+
+        return (A[median_indexs[0]] + A[median_indexs[1]]) / 2
+
+
 if __name__ == "__main__":
-    r = topk()
+    s = Solution()
+    r = s.findMedianSortedArrays([1, 2, 3, 4, 5, 6], [2, 3, 4, 5])
     print(r)
