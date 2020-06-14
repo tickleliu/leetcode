@@ -31,10 +31,28 @@ def three_sum(nums=[-6, 0, 1, 2, 3, 4, 5, 6, 8, 21], k=0):
     return res
 
 
-class Main():
-    def __init__(self):
-        pass
+def two_sum(nums=[-6, 0, 1, 2, 3, 4, 5, 6, 8, 21], k=20):
+    left = 0
+    right = len(nums) - 1
+    temp = nums[left] + nums[right]
+    is_break = False
+    while temp > k:
+        right -= 1
+        if left >= right:
+            right += 1
+            break
+        temp = nums[left] + nums[right]
+    while temp < k:
+        left += 1
+        if left >= right:
+            left -= 1
+            break
+        temp = nums[left] + nums[right]
+    if temp == k:
+        return [nums[left], nums[right]]
+
+    return [nums[left], nums[right]]
 
 
 if __name__ == "__main__":
-    print(three_sum())
+    print(two_sum())

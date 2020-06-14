@@ -14,46 +14,57 @@
 import random
 
 
-def find_topk(nums=[5, 1, 4, 3, 2], k=3):
-    def _help(nums, s, e, k):
-        use_idx = random.randint(s, e)
+class Solution:
+    """
+    @param n: An integer
+    @param nums: An array
+    @return: the Kth largest element
+    """
 
-        temp = nums[s]
-        nums[s] = nums[use_idx]
-        nums[use_idx] = temp
+    def kthLargestElement(self, n, nums):
+        # write your code here
+        def _help(nums, s, e, k):
+            if s >= e:
+                return nums[s]
+            use_idx = random.randint(s, e)
 
-        use_idx = partitions(nums, s, e)
+            temp = nums[s]
+            nums[s] = nums[use_idx]
+            nums[use_idx] = temp
 
-        if use_idx == k:
-            return
-        elif use_idx < k:
-            _help(nums, use_idx, e, k)
-        else:
-            _help(nums, s, use_idx, k)
+            use_idx = self.partitions(nums, s, e)
 
-    _help(nums, 0, len(nums) - 1, k)
-    return nums
+            if use_idx == k - 1:
+                return nums[use_idx]
+            elif use_idx > k:
+                _help(nums, use_idx + 1, e, k)
+            else:
+                _help(nums, s, use_idx - 1, k)
 
+        result = _help(nums, 0, len(nums) - 1, n)
+        return nums[n - 1]
 
-def partion(array, low, high):
-    key = array[low]
-    while low < high:
-        while low < high and array[high] >= key:
-            high -= 1
-        if low < high:
-            array[low] = array[high]
+    def partitions(self, array, low, high):
+        key = array[low]
+        while low < high:
+            while low < high and array[high] <= key:
+                high -= 1
+            if low < high:
+                array[low] = array[high]
 
-        while low < high and array[low] < key:
-            low += 1
-        if low < high:
-            array[high] = array[low]
+            while low < high and array[low] > key:
+                low += 1
+            if low < high:
+                array[high] = array[low]
 
-    array[low] = key
-    return low
+        array[low] = key
+        return low
 
 
 if __name__ == "__main__":
     # r = find_topk()
     # print(r)
     nums = [3, 1, 2, 4, 5]
-    partion(nums, 0, len(nums) - 1)
+    s = Solution()
+    r = s.kthLargestElement(2, [1, 3, 4, 2])
+    print(r)
